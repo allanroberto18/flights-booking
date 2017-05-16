@@ -1,0 +1,92 @@
+<section class="section hero is-dark">
+    <div class="hero-body">
+        <div class="container is-fluid">
+            <h1 class="title">
+                {{ vm.title }}
+            </h1>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container is-fluid">
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label">Where are you?</label>
+                    <p class="control is-expanded">
+                        <span class="select is-fullwidth">
+                          <select name="origin_country" ng-model="vm.origin"
+                                  ng-change="vm.getAirportsOrigin(vm.origin)">
+                              <option value="">[Select country]</option>
+                              <option value="{{ item.code }}" ng-repeat="item in vm.countries">{{ item.name }}</option>
+                          </select>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="column" ng-show="vm.airportsOrigin.length > 0">
+                <div class="field">
+                    <label class="label">Airports Available:</label>
+                    <p class="control">
+                        <span class="select is-fullwidth">
+                          <select name="origin_airport" ng-model="vm.airportOrigin"
+                                  ng-change="vm.getRoutesOrigin(vm.airportOrigin)">
+                              <option value="">[Select the airport]</option>
+                              <option ng-repeat="item in vm.airportsOrigin"
+                                      ng-value="item.iataCode">{{ item.name }}</option>
+                          </select>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label class="label"><span class="icon is-small is-right"><i class="fa fa-calendar"></i></span> Fly
+                        Out</label>
+                    <p class="control has-icons-right">
+                        <input class="input" type="date" ng-model="vm.out"/>
+                    </p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label class="label"><span class="icon is-small is-right"><i class="fa fa-calendar"></i></span> Fly
+                        Back</label>
+                    <p class="control has-icons-right">
+                        <input class="input" type="date" ng-model="vm.back"/>
+                    </p>
+                </div>
+            </div>
+            <div class="column" ng-show="vm.routesOrigin.length > 0">
+                <div class="field">
+                    <label class="label"><span class="icon is-small is-right"><i class="fa fa-search"></i></span> Filter
+                        your destiny</label>
+                    <p class="control has-icons-right">
+                        <input class="input" type="text" ng-model="vm.search"
+                               placeholder="Insert country or airport name"/>
+                    </p>
+                </div>
+                <table class="mt table">
+                    <thead>
+                    <tr>
+                        <th>Airport</th>
+                        <th>Country</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="pointer" ng-repeat="item in vm.routesOrigin | filter: vm.search"
+                        ng-click="vm.setDestiny(item.iataCode)">
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.country.name }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="field" ng-show="vm.link != ''">
+                    <p class="control">
+                        <button class="button is-black" ng-click="vm.go()">Check Out</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

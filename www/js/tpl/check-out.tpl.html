@@ -1,0 +1,37 @@
+<section class="section hero is-dark">
+    <div class="hero-body">
+        <div class="container is-fluid">
+            <h1 class="title">
+                {{ vm.title }}
+            </h1>
+            <h2>
+                {{ vm.origin }}/{{ vm.destiny }}
+            </h2>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container is-fluid">
+        <div class="field mb2">
+            <label class="label"><span class="icon is-small is-right"><i class="fa fa-search"></i></span> Filter
+                your destiny</label>
+            <p class="control has-icons-right">
+                <input class="input" type="text" ng-model="vm.search" placeholder="Insert country or airport name"/>
+            </p>
+        </div>
+        <div class="box" ng-show="vm.checkOut.flights.length > 0"
+             ng-repeat="item in vm.checkOut.flights | filter: vm.search">
+            <strong>Out: </strong> {{ item.dateFrom | date:'yyyy-MM-dd' }} / <strong>Back: </strong> {{ item.dateTo
+            | date:'yyyy-MM-dd'}} <br>
+            <strong>Price: </strong> {{ item.currency }} {{ item.price | number: 2 }}
+        </div>
+        <div ng-hide="vm.checkOut.flights.length > 0">
+            <div class="box">
+                Data not found
+            </div>
+        </div>
+
+        <a class="button is-black" href="#" ng-click="vm.back()"> Back</a>
+    </div>
+</section>
